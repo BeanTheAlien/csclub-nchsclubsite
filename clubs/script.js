@@ -204,6 +204,35 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   // Search logic
   searchInput.addEventListener("input", function () {
+    /*
+    This is an array prototype I have that basiaclly does a "smart search", you can implement this to have a more dynamic search:
+    export function closest(string, count = Infinity, minscore = 0) {
+        let result = this.map(item => {
+          const stringItem = typeof item == "string" ? item : JSON.stringify(item);
+          let score = 0;
+          if(stringItem == string) score++;
+          for(let i = 0; i < string.length; i++) {
+              if(stringItem.substring(i, i + string.length) == string) score++;
+          }
+          for(let i = 0; i < stringItem.length; i++) {
+              for(let n = 0; n < string.length; n++) {
+                  if(stringItem[i] == string[n]) score++;
+              }
+          }
+          return { item, score };
+      });
+      result.sort((a, b) => b.score - a.score);
+      result = result.slice(0, count);
+      result = result.filter(e => e.score > minscore);
+      return result;
+    }
+
+    Array.prototype.closest = closest;
+
+    sourced from my js utils (the updated version should be avalible rn, its been a while since i updated the source)
+    you can find all my utils at https://github.com/BeanTheAlien/utilpackages
+    my js utils are at https://github.com/BeanTheAlien/utilpackages/blob/main/JavaScript/jsutils.js
+    */
     const query = searchInput.value.toLowerCase();
     const filtered = clubs.filter(club =>
       club.name.toLowerCase().split(" ").some(word => word.startsWith(query))
