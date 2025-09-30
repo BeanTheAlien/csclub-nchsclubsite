@@ -234,16 +234,35 @@ document.addEventListener("DOMContentLoaded", async function () {
     my js utils are at https://github.com/BeanTheAlien/utilpackages/blob/main/JavaScript/jsutils.js
     */
     const query = searchInput.value.toLowerCase();
-    const filtered = clubs.filter(club =>
-      club.name.toLowerCase().split(" ").some(word => word.startsWith(query))
-    );
+    const min = 1;
+    let res = clubs.map(c => {
+      const stringItem = typeof item == "string" ? item : JSON.stringify(item);
+          let score = 0;
+          if(stringItem == string) score++;
+          for(let i = 0; i < string.length; i++) {
+              if(stringItem.substring(i, i + string.length) == string) score++;
+          }
+          for(let i = 0; i < stringItem.length; i++) {
+              for(let n = 0; n < string.length; n++) {
+                  if(stringItem[i] == string[n]) score++;
+              }
+          }
+          return { item, score };
+    });
+    result.sort((a, b) => b.score - a.score);
+    result = result.filter(r => r.score > min);
+    result = selectedTag == "all" ? result.filter(r => r.tags.some(t => t.toLowerCase().replace(/\s+/g, "-") == selectedTag));
+    // const filtered = clubs.filter(club =>
+      // club.name.toLowerCase().split(" ").some(word => word.startsWith(query))
+    // );
 
     // Apply tag filter *on top of search*
-    const finalFiltered = selectedTag === "all"
-      ? filtered
-      : filtered.filter(club => club.tags.some(t => t.toLowerCase().replace(/\s+/g, '-') === selectedTag));
+    // const finalFiltered = selectedTag === "all"
+      // ? filtered
+      // : filtered.filter(club => club.tags.some(t => t.toLowerCase().replace(/\s+/g, '-') === selectedTag));
 
-    renderCards(finalFiltered);
+    // renderCards(finalFiltered);
+    renderCards(result);
   });
 
   loadTags();
