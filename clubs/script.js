@@ -1,3 +1,5 @@
+window.addEventListener("error", (e) => alert(`msg: ${e.message}, ln: ${e.lineno}`));
+
 document.addEventListener("DOMContentLoaded", async function () {
   const toggleBtn = document.getElementById("toggleFilters");
   const cardGrid = document.getElementById("clubCards");
@@ -58,6 +60,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       const card = document.createElement("div");
       card.classList.add("club-card");
 
+      // club.tags doesn't work, this will break the script
       const tagSpans = club.tags
         .map(tag => `<span class="tag ${tag.toLowerCase().replace(/\s+/g, '-')}">${tag}</span>`)
         .join(" ");
@@ -235,16 +238,16 @@ document.addEventListener("DOMContentLoaded", async function () {
     */
     const query = searchInput.value.toLowerCase();
     const min = 1;
-    let result = clubs.map(c => {
+    let result = clubs.map(item => {
       const stringItem = typeof item == "string" ? item : JSON.stringify(item);
           let score = 0;
-          if(stringItem == string) score++;
-          for(let i = 0; i < string.length; i++) {
-              if(stringItem.substring(i, i + string.length) == string) score++;
+          if(stringItem == query) score++;
+          for(let i = 0; i < query.length; i++) {
+              if(stringItem.substring(i, i + query.length) == query) score++;
           }
           for(let i = 0; i < stringItem.length; i++) {
-              for(let n = 0; n < string.length; n++) {
-                  if(stringItem[i] == string[n]) score++;
+              for(let n = 0; n < query.length; n++) {
+                  if(stringItem[i] == query[n]) score++;
               }
           }
           return { item, score };
