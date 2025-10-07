@@ -235,7 +235,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     */
     const query = searchInput.value.toLowerCase();
     const min = 1;
-    let res = clubs.map(c => {
+    let result = clubs.map(c => {
       const stringItem = typeof item == "string" ? item : JSON.stringify(item);
           let score = 0;
           if(stringItem == string) score++;
@@ -251,7 +251,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     });
     result.sort((a, b) => b.score - a.score);
     result = result.filter(r => r.score > min);
-    result = selectedTag == "all" ? result.filter(r => r.tags.some(t => t.toLowerCase().replace(/\s+/g, "-") == selectedTag));
+    result = selectedTag == "all" ? result : result.filter(r => r.tags.some(t => t.toLowerCase().replace(/\s+/g, "-") == selectedTag));
     // const filtered = clubs.filter(club =>
       // club.name.toLowerCase().split(" ").some(word => word.startsWith(query))
     // );
